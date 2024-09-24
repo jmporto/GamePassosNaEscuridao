@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class GameTimer : MonoBehaviour
 {
-    public Text timerText;
+    public TextMeshProUGUI timerText;
     private float timeRemaining = 900; // 15 minutos
     private bool timerRunning = true;
 
