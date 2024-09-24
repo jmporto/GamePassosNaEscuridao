@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,8 +10,8 @@ public class ObjectiveController : MonoBehaviour
     public GameObject[] objectives;
     public string[] objectiveMessages;
     public float interactionDistance = 2f;
-    public Text objectiveText;
-    public Text interactionText;
+    public TextMeshProUGUI objectiveText;
+    public TextMeshProUGUI interactionText;
     private int currentObjective = 0;
 
     void Start()
