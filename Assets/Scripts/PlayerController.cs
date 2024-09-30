@@ -7,11 +7,15 @@ public class PlayerController : MonoBehaviour
     public float moveSpeed = 10f;
     public Rigidbody2D rb;
     private Vector2 movement;
+    private float x0, y0;
 
     void Update()
     {
-        movement.x = Input.GetAxisRaw("Horizontal");
-        movement.y = Input.GetAxisRaw("Vertical");
+        x0 = Input.GetAxis("HORIZONTAL0");
+		y0 = Input.GetAxis("VERTICAL0");
+
+        movement.x = x0;
+        movement.y = y0;
     }
 
     void FixedUpdate()

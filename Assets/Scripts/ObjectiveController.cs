@@ -13,6 +13,7 @@ public class ObjectiveController : MonoBehaviour
     public TextMeshProUGUI objectiveText;
     public TextMeshProUGUI interactionText;
     private int currentObjective = 0;
+    private float verde0;
 
     void Start()
     {
@@ -22,18 +23,20 @@ public class ObjectiveController : MonoBehaviour
 
     void Update()
     {
-        if (currentObjective >= objectives.Length) return; // Se não houver mais objetivos, sai do Update
+        verde0 = Input.GetAxis("VERDE0");
+
+        if (currentObjective >= objectives.Length) return; // Se nao houver mais objetivos, sai do Update
 
         GameObject objective = objectives[currentObjective];
         float distanceToObjective = Vector2.Distance(transform.position, objective.transform.position);
 
-        // Checa se o player está dentro do range do objetivo
+        // Checa se o player esta dentro do range do objetivo
         if (distanceToObjective <= interactionDistance)
         {
             interactionText.gameObject.SetActive(true);
-            interactionText.text = "Pressione F";
+            interactionText.text = "Pressione Verde/R";
 
-            if (Input.GetKeyDown(KeyCode.F))
+            if (verde0 > 0.0f)
             {
                 InteractWithObjective();
             }
@@ -52,13 +55,13 @@ public class ObjectiveController : MonoBehaviour
 
         if (currentObjective < objectives.Length)
         {
-            // Ativa o próximo objetivo e atualiza o texto
+            // Ativa o prï¿½ximo objetivo e atualiza o texto
             objectives[currentObjective].SetActive(true);
             UpdateObjectiveText();
         }
         else
         {
-            objectiveText.text = "Todos os objetivos concluídos!";
+            objectiveText.text = "Todos os objetivos concluidos!";
             interactionText.gameObject.SetActive(false);
         }
     }
