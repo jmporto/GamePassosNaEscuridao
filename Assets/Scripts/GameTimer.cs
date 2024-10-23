@@ -8,7 +8,7 @@ using TMPro;
 public class GameTimer : MonoBehaviour
 {
     public TextMeshProUGUI timerText;
-    private float timeRemaining = 900; // 15 minutos
+    private float timeRemaining = 10; // 15 minutos
     private bool timerRunning = true;
 
     void Update()
