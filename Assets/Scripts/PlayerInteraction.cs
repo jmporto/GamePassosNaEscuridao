@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class PlayerInteraction : MonoBehaviour
 {
-    private Objective currentObjective;  // Referência ao objetivo atual
-    public GameObject interactionPrompt;  // Referência ao texto de interação na UI
+    private Objective currentObjective;
+    public GameObject interactionPrompt;
     public TextMeshProUGUI objectiveText;
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -17,8 +17,8 @@ public class PlayerInteraction : MonoBehaviour
             currentObjective = collision.GetComponent<Objective>();
             if (currentObjective != null && !currentObjective.IsCompleted())
             {
-                ShowInteractionPrompt();  // Mostra a mensagem de interação
-                objectiveText.text = currentObjective.GetObjectiveDescription();  // Atualiza com o texto correto
+                ShowInteractionPrompt();
+                objectiveText.text = currentObjective.GetObjectiveDescription();
             }
         }
     }
@@ -27,7 +27,7 @@ public class PlayerInteraction : MonoBehaviour
     {
         if (collision.CompareTag("Objective"))
         {
-            HideInteractionPrompt();  // Esconde a mensagem de interação
+            HideInteractionPrompt();
         }
     }
 
@@ -36,7 +36,7 @@ public class PlayerInteraction : MonoBehaviour
         if (Input.GetButton("VERDE0") && currentObjective != null)
         {
             Debug.Log("Segurando o botão VERDE0, progredindo no objetivo...");
-            currentObjective.CheckObjectiveProgress();  // Chamará a lógica de progresso do objetivo
+            currentObjective.CheckObjectiveProgress();
         }
     }
 
@@ -44,7 +44,7 @@ public class PlayerInteraction : MonoBehaviour
     {
         if (interactionPrompt != null)
         {
-            interactionPrompt.SetActive(true);  // Ativa o texto de interação
+            interactionPrompt.SetActive(true);
         }
     }
 
@@ -52,7 +52,7 @@ public class PlayerInteraction : MonoBehaviour
     {
         if (interactionPrompt != null)
         {
-            interactionPrompt.SetActive(false);  // Desativa o texto de interação
+            interactionPrompt.SetActive(false);
         }
     }
 }
