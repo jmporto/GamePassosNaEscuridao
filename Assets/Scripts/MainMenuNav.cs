@@ -8,7 +8,10 @@ public class MainMenuNav : MonoBehaviour
 {
     public Button[] buttons;
     private int selectedIndex = 0;
-    public GameObject optionsCanvas;
+/*    public GameObject optionsCanvas;*/
+    private bool isVerticalInputPressed = false;
+    private bool isGreenInputPressed = false;
+
 
     void Start()
     {
@@ -18,20 +21,38 @@ public class MainMenuNav : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            ExecuteButtonAction();
-        }
+        float verde0Value = Input.GetAxisRaw("VERDE0");
+        float verticalInput = Input.GetAxisRaw("VERTICAL0");
 
-        if (Input.GetKeyDown(KeyCode.W))
+        // Detectar transição para cima
+        if (verticalInput > 0 && !isVerticalInputPressed)
         {
             ChangeSelection(-1);
             Debug.Log("Movendo para cima");
+            isVerticalInputPressed = true;
         }
-        else if (Input.GetKeyDown(KeyCode.S))
+        // Detectar transição para baixo
+        else if (verticalInput < 0 && !isVerticalInputPressed)
         {
             ChangeSelection(1);
             Debug.Log("Movendo para baixo");
+            isVerticalInputPressed = true;
+        }
+        // Resetar a flag quando não há input
+        else if (verticalInput == 0)
+        {
+            isVerticalInputPressed = false;
+        }
+
+        if (verde0Value > 0 && !isGreenInputPressed)
+        {
+            ExecuteButtonAction();
+            Debug.Log("Clicado");
+            isVerticalInputPressed = true; 
+        }
+        else if (verde0Value == 0)
+        {
+            isGreenInputPressed = false;
         }
     }
 
@@ -39,10 +60,11 @@ public class MainMenuNav : MonoBehaviour
     {
         selectedIndex += direction;
 
-        if (selectedIndex < 0) selectedIndex = buttons.Length - 1; // Volta para o último botão
-        if (selectedIndex >= buttons.Length) selectedIndex = 0; // Volta para o primeiro botão
+        if (selectedIndex < 0) selectedIndex = buttons.Length - 1;
+        if (selectedIndex >= buttons.Length) selectedIndex = 0;
 
         UpdateButtonSelection();
+
     }
 
     void UpdateButtonSelection()
@@ -60,13 +82,13 @@ public class MainMenuNav : MonoBehaviour
         switch (selectedIndex)
         {
             case 0:
-                SceneManager.LoadScene("Scene1_House");
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
                 break;
-            case 1:
+/*            case 1:
                 gameObject.SetActive(false);
                 optionsCanvas.SetActive(true);
-                break;
-            case 2:
+                break;*/
+            case 1:
                 Application.Quit();
                 break;
         }

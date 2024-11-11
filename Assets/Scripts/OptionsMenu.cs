@@ -1,4 +1,4 @@
-using System.Collections;
+/*using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,18 +7,23 @@ public class OptionsMenu : MonoBehaviour
 {
     public Slider musicSlider;
     public Slider sfxSlider;
-    public Button backButton;
-
+    public Button backButton;  // Referência para o botão de voltar
     private int selectedIndex = 0;
     private GameObject[] options;
     private Image[] optionBackgrounds;
 
-    public GameObject mainMenuCanvas;
+    public GameObject mainMenuCanvas;  // Referência para o canvas principal
+    public GameObject optionsCanvas;   // Referência para o canvas de opções
+
+    private bool isVerticalInputPressed = false;
+    private bool isGreenInputPressed = false;
 
     void Start()
     {
+        // Inicializando os botões de opções
         options = new GameObject[] { musicSlider.gameObject, sfxSlider.gameObject, backButton.gameObject };
 
+        // Inicializando os backgrounds dos botões
         optionBackgrounds = new Image[]
         {
             musicSlider.transform.parent.GetComponent<Image>(),
@@ -27,46 +32,53 @@ public class OptionsMenu : MonoBehaviour
         };
 
         UpdateSelection();
+
+        if (backButton != null)
+        {
+            // Associando o método OnBackButtonPressed ao onClick
+            backButton.onClick.AddListener(OnBackButtonPressed);
+        }
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.W))
+        // Recebendo input vertical (W/S ou setas)
+        float verticalInput = Input.GetAxisRaw("VERTICAL0");
+        float verde0Value = Input.GetAxisRaw("VERDE0");
+
+        // Movendo a seleção para cima
+        if (verticalInput > 0 && !isVerticalInputPressed)
         {
             selectedIndex = (selectedIndex - 1 + options.Length) % options.Length;
             UpdateSelection();
+            isVerticalInputPressed = true;
         }
-        else if (Input.GetKeyDown(KeyCode.S))
+        // Movendo a seleção para baixo
+        else if (verticalInput < 0 && !isVerticalInputPressed)
         {
             selectedIndex = (selectedIndex + 1) % options.Length;
             UpdateSelection();
+            isVerticalInputPressed = true;
+        }
+        else if (verticalInput == 0)
+        {
+            isVerticalInputPressed = false;
         }
 
-        if (selectedIndex < options.Length - 1)
+        // Ação quando pressionado o botão VERDE0
+        if (verde0Value > 0 && !isGreenInputPressed)
         {
-            Slider slider = options[selectedIndex].GetComponent<Slider>();
-            if (slider != null)
-            {
-                float sliderInput = Input.GetAxis("Horizontal");
-
-                if (sliderInput != 0)
-                {
-                    slider.value += sliderInput * Time.deltaTime * slider.maxValue;
-                    slider.value = Mathf.Clamp(slider.value, slider.minValue, slider.maxValue);
-                }
-            }
+            // Simula o clique do botão de voltar
+            backButton.onClick.Invoke();
+            isGreenInputPressed = true;
         }
-
-        if (Input.GetKeyDown(KeyCode.Space))
+        else if (verde0Value == 0)
         {
-            if (selectedIndex == options.Length - 1)
-            {
-                gameObject.SetActive(false);
-                mainMenuCanvas.SetActive(true);
-            }
+            isGreenInputPressed = false;
         }
     }
 
+    // Atualizando a seleção visual dos botões
     void UpdateSelection()
     {
         for (int i = 0; i < optionBackgrounds.Length; i++)
@@ -74,4 +86,12 @@ public class OptionsMenu : MonoBehaviour
             optionBackgrounds[i].color = (i == selectedIndex) ? Color.gray : Color.white;
         }
     }
-}
+
+    // Ação ao pressionar o botão de voltar
+    void OnBackButtonPressed()
+    {
+        // Desativa o OptionsCanvas e ativa o MainMenuCanvas
+        optionsCanvas.SetActive(false);
+        mainMenuCanvas.SetActive(true);
+    }
+}*/
