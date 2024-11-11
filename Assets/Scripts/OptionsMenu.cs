@@ -17,10 +17,8 @@ public class OptionsMenu : MonoBehaviour
 
     void Start()
     {
-        // Inicializar opções para navegação
         options = new GameObject[] { musicSlider.gameObject, sfxSlider.gameObject, backButton.gameObject };
 
-        // Procurar os backgrounds (containers) dos sliders e botão para alteração de cor
         optionBackgrounds = new Image[]
         {
             musicSlider.transform.parent.GetComponent<Image>(),
@@ -33,41 +31,36 @@ public class OptionsMenu : MonoBehaviour
 
     void Update()
     {
-        // Navegação Vertical com W e S
-        if (Input.GetKeyDown(KeyCode.W)) // Para cima
+        if (Input.GetKeyDown(KeyCode.W))
         {
             selectedIndex = (selectedIndex - 1 + options.Length) % options.Length;
             UpdateSelection();
         }
-        else if (Input.GetKeyDown(KeyCode.S)) // Para baixo
+        else if (Input.GetKeyDown(KeyCode.S))
         {
             selectedIndex = (selectedIndex + 1) % options.Length;
             UpdateSelection();
         }
 
-        // Controle dos Sliders
-        if (selectedIndex < options.Length - 1) // Apenas se um dos sliders estiver selecionado
+        if (selectedIndex < options.Length - 1)
         {
             Slider slider = options[selectedIndex].GetComponent<Slider>();
-            if (slider != null) // Verifica se é um slider
+            if (slider != null)
             {
                 float sliderInput = Input.GetAxis("Horizontal");
 
-                // Ajuste do valor do slider
                 if (sliderInput != 0)
                 {
-                    slider.value += sliderInput * Time.deltaTime * slider.maxValue; // Ajuste a velocidade aqui
-                    slider.value = Mathf.Clamp(slider.value, slider.minValue, slider.maxValue); // Garante que o valor fique dentro dos limites
+                    slider.value += sliderInput * Time.deltaTime * slider.maxValue;
+                    slider.value = Mathf.Clamp(slider.value, slider.minValue, slider.maxValue);
                 }
             }
         }
 
-        // Ação para voltar ao menu
-        if (Input.GetKeyDown(KeyCode.Space)) // Ou outra tecla para voltar
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (selectedIndex == options.Length - 1) // Se for o botão de voltar
+            if (selectedIndex == options.Length - 1)
             {
-                // Ativar menu principal e desativar opções
                 gameObject.SetActive(false);
                 mainMenuCanvas.SetActive(true);
             }
@@ -76,10 +69,9 @@ public class OptionsMenu : MonoBehaviour
 
     void UpdateSelection()
     {
-        // Alterar cor de fundo para a opção selecionada
         for (int i = 0; i < optionBackgrounds.Length; i++)
         {
-            optionBackgrounds[i].color = (i == selectedIndex) ? Color.gray : Color.white; // Muda a cor para cinza se estiver selecionado
+            optionBackgrounds[i].color = (i == selectedIndex) ? Color.gray : Color.white;
         }
     }
 }

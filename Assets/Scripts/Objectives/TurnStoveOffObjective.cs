@@ -1,17 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
-public class TurnOnBathObjective : Objective
+public class TurnStoveOffObjective : Objective
 {
-    public float requiredHoldTime = 1f;
+    public float requiredHoldTime = 2f;
     private float currentHoldTime = 0f;
+
+    private void Start()
+    {
+        if (progressBar != null)
+        {
+            progressBar.gameObject.SetActive(false);
+        }
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
-            progressBar.gameObject.SetActive(true);
+            if (progressBar != null)
+            {
+                progressBar.gameObject.SetActive(true);
+            }
         }
     }
 
@@ -19,7 +31,10 @@ public class TurnOnBathObjective : Objective
     {
         if (collision.CompareTag("Player"))
         {
-            progressBar.gameObject.SetActive(false);
+            if (progressBar != null)
+            {
+                progressBar.gameObject.SetActive(false);
+            }
         }
     }
 
@@ -31,7 +46,10 @@ public class TurnOnBathObjective : Objective
             {
                 currentHoldTime += Time.deltaTime;
 
-                UpdateProgressBar(currentHoldTime / requiredHoldTime);
+                if (progressBar != null)
+                {
+                    UpdateProgressBar(currentHoldTime / requiredHoldTime);
+                }
 
                 if (currentHoldTime >= requiredHoldTime)
                 {
@@ -41,7 +59,10 @@ public class TurnOnBathObjective : Objective
             else
             {
                 currentHoldTime = 0f;
-                UpdateProgressBar(0f);
+                if (progressBar != null)
+                {
+                    UpdateProgressBar(0f);
+                }
             }
         }
     }
