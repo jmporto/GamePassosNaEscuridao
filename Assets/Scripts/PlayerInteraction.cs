@@ -17,7 +17,10 @@ public class PlayerInteraction : MonoBehaviour
             currentObjective = collision.GetComponent<Objective>();
             if (currentObjective != null && !currentObjective.IsCompleted())
             {
-                ShowInteractionPrompt();
+                if (!(currentObjective is WaitBathWaterObjective))
+                {
+                    ShowInteractionPrompt();
+                }
                 objectiveText.text = currentObjective.GetObjectiveDescription();
             }
         }
