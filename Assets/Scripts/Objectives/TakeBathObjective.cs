@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
-public class TurnOnBathObjective : Objective
+public class TakeBathObjective : Objective
 {
-    public float requiredHoldTime = 1f;
+    public float requiredHoldTime = 5f;
     private float currentHoldTime = 0f;
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -30,7 +31,6 @@ public class TurnOnBathObjective : Objective
             if (Input.GetButton("VERDE0"))
             {
                 currentHoldTime += Time.deltaTime;
-
                 UpdateProgressBar(currentHoldTime / requiredHoldTime);
 
                 if (currentHoldTime >= requiredHoldTime)
