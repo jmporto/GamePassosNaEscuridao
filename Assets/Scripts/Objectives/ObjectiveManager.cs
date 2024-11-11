@@ -7,7 +7,7 @@ public class ObjectiveManager : MonoBehaviour
 {
     public TextMeshProUGUI objectiveText;
     public Objective[] objectives;
-    private int currentObjectiveIndex = 0;
+    public int currentObjectiveIndex = 0;
 
     void Start()
     {
@@ -34,7 +34,7 @@ public class ObjectiveManager : MonoBehaviour
         }
     }
 
-    private void StartObjective()
+    public void StartObjective()
     {
         if (currentObjectiveIndex < objectives.Length)
         {
