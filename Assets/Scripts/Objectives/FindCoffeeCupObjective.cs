@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class GetKettleObjective : Objective
+public class FindCoffeeCupObjective : Objective
 {
-    public GameObject kettlePrefab;
+    public GameObject coffeeCup;
     public TextMeshProUGUI interactionText;
 
 
@@ -21,7 +21,7 @@ public class GetKettleObjective : Objective
     {
         if (!isCompleted && Input.GetButtonDown("VERDE0"))
         {
-            Destroy(kettlePrefab);
+            Destroy(coffeeCup);
 
             CompleteObjective();
         }
