@@ -16,7 +16,7 @@ public class DuckCollector : MonoBehaviour
 
     private void Start()
     {
-        collectedDucksText.text = "Patos Coletados: 0/8";
+        collectedDucksText.text = "??? Coletados: 0/8";
         infoText.gameObject.SetActive(false);
         interactionText.gameObject.SetActive(false);
         continueText.gameObject.SetActive(false);
@@ -41,7 +41,7 @@ public class DuckCollector : MonoBehaviour
         {
             isNearDuck = true;
             currentDuck = other.gameObject;
-            interactionText.text = "Aperte Verde para interagir";
+            interactionText.text = "Coletar ???";
             interactionText.gameObject.SetActive(true);
         }
     }
