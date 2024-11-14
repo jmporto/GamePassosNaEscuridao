@@ -14,7 +14,6 @@ public abstract class Objective : MonoBehaviour
 
     public virtual void StartObjective()
     {
-        // Inicializa o estado do objetivo
         isCompleted = false;
         progressBar.gameObject.SetActive(false);
     }

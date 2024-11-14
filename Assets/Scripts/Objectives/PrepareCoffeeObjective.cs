@@ -1,34 +1,43 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class PrepareCoffeeObjective : Objective
 {
+    public float requiredHoldTime = 2f;
+    private float currentHoldTime = 0f;
+    public float activationRange = 1f;
+    private GameObject player;
     public GameObject kettlePrefab;
     public Transform spawnLocation;
     private GameObject instantiatedKettle;
 
-    public float requiredHoldTime = 5f;
-    private float currentHoldTime = 0f;
 
     private Vector3 scaleAdjustment = new Vector3(0.5f, 0.5f, 0.5f);
 
     private Vector3 positionAdjustment = new Vector3(14.8f, 10.2f, 0f);
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    void Start()
     {
-        if (collision.CompareTag("Player"))
-        {
-            progressBar.gameObject.SetActive(true);
-        }
+        player = GameObject.FindGameObjectWithTag("Player");
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    void Update()
     {
-        if (collision.CompareTag("Player"))
+        if (player != null)
         {
-            progressBar.gameObject.SetActive(false);
+            float distance = Vector2.Distance(transform.position, player.transform.position);
+
+            if (distance <= activationRange)
+            {
+                CheckObjectiveProgress();
+            }
+            else
+            {
+                progressBar.gameObject.SetActive(false);
+                currentHoldTime = 0f;
+                UpdateProgressBar(0f);
+            }
         }
     }
 
@@ -48,8 +57,8 @@ public class PrepareCoffeeObjective : Objective
                 }
 
                 currentHoldTime += Time.deltaTime;
-
                 UpdateProgressBar(currentHoldTime / requiredHoldTime);
+                progressBar.gameObject.SetActive(true);
 
                 if (currentHoldTime >= requiredHoldTime)
                 {
@@ -60,6 +69,7 @@ public class PrepareCoffeeObjective : Objective
             {
                 currentHoldTime = 0f;
                 UpdateProgressBar(0f);
+                progressBar.gameObject.SetActive(false);
             }
         }
     }

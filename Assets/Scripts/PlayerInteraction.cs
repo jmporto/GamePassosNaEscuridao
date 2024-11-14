@@ -8,6 +8,7 @@ public class PlayerInteraction : MonoBehaviour
     private Objective currentObjective;
     public GameObject interactionPrompt;
     public TextMeshProUGUI objectiveText;
+    private bool isInCollider = false;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -15,13 +16,12 @@ public class PlayerInteraction : MonoBehaviour
         {
             Debug.Log("Entrou no objetivo!");
             currentObjective = collision.GetComponent<Objective>();
+
             if (currentObjective != null && !currentObjective.IsCompleted())
             {
-                if (!(currentObjective is WaitBathWaterObjective))
-                {
-                    ShowInteractionPrompt();
-                }
-                objectiveText.text = currentObjective.GetObjectiveDescription();
+                ShowInteractionPrompt();
+                objectiveText.text = "Pressione VERDE0 para " + currentObjective.GetType().Name;
+                isInCollider = true;
             }
         }
     }
@@ -31,14 +31,20 @@ public class PlayerInteraction : MonoBehaviour
         if (collision.CompareTag("Objective"))
         {
             HideInteractionPrompt();
+            isInCollider = false;
         }
     }
 
     private void Update()
     {
-        if (Input.GetButton("VERDE0") && currentObjective != null)
+        if (isInCollider && currentObjective != null && !currentObjective.IsCompleted())
         {
-            Debug.Log("Segurando o botão VERDE0, progredindo no objetivo...");
+            if (currentObjective is WaitBathWaterObjective)
+            {
+                // Hide the interaction prompt for WaitBathTime objective
+                HideInteractionPrompt();
+            }
+
             currentObjective.CheckObjectiveProgress();
         }
     }

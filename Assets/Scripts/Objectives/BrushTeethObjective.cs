@@ -6,20 +6,30 @@ public class BrushTeethObjective : Objective
 {
     public float requiredHoldTime = 5f;
     private float currentHoldTime = 0f;
+    public float activationRange = 1f;
+    private GameObject player;
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    void Start()
     {
-        if (collision.CompareTag("Player"))
-        {
-            progressBar.gameObject.SetActive(true);
-        }
+        player = GameObject.FindGameObjectWithTag("Player");
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    void Update()
     {
-        if (collision.CompareTag("Player"))
+        if (player != null)
         {
-            progressBar.gameObject.SetActive(false);
+            float distance = Vector2.Distance(transform.position, player.transform.position);
+
+            if (distance <= activationRange)
+            {
+                CheckObjectiveProgress();
+            }
+            else
+            {
+                progressBar.gameObject.SetActive(false);
+                currentHoldTime = 0f;
+                UpdateProgressBar(0f);
+            }
         }
     }
 
@@ -31,6 +41,7 @@ public class BrushTeethObjective : Objective
             {
                 currentHoldTime += Time.deltaTime;
                 UpdateProgressBar(currentHoldTime / requiredHoldTime);
+                progressBar.gameObject.SetActive(true);
 
                 if (currentHoldTime >= requiredHoldTime)
                 {
@@ -41,6 +52,7 @@ public class BrushTeethObjective : Objective
             {
                 currentHoldTime = 0f;
                 UpdateProgressBar(0f);
+                progressBar.gameObject.SetActive(false);
             }
         }
     }
