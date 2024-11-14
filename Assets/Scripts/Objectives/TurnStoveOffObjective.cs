@@ -5,35 +5,31 @@ using UnityEngine.UIElements;
 
 public class TurnStoveOffObjective : Objective
 {
-    public float requiredHoldTime = 2f;
+    public float requiredHoldTime = 5f;
     private float currentHoldTime = 0f;
+    public float activationRange = 1f;
+    private GameObject player;
 
-    private void Start()
+    void Start()
     {
-        if (progressBar != null)
-        {
-            progressBar.gameObject.SetActive(false);
-        }
+        player = GameObject.FindGameObjectWithTag("Player");
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    void Update()
     {
-        if (collision.CompareTag("Player"))
+        if (player != null)
         {
-            if (progressBar != null)
+            float distance = Vector2.Distance(transform.position, player.transform.position);
+
+            if (distance <= activationRange)
             {
-                progressBar.gameObject.SetActive(true);
+                CheckObjectiveProgress();
             }
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player"))
-        {
-            if (progressBar != null)
+            else
             {
                 progressBar.gameObject.SetActive(false);
+                currentHoldTime = 0f;
+                UpdateProgressBar(0f);
             }
         }
     }
@@ -45,11 +41,8 @@ public class TurnStoveOffObjective : Objective
             if (Input.GetButton("VERDE0"))
             {
                 currentHoldTime += Time.deltaTime;
-
-                if (progressBar != null)
-                {
-                    UpdateProgressBar(currentHoldTime / requiredHoldTime);
-                }
+                UpdateProgressBar(currentHoldTime / requiredHoldTime);
+                progressBar.gameObject.SetActive(true);
 
                 if (currentHoldTime >= requiredHoldTime)
                 {
@@ -59,10 +52,8 @@ public class TurnStoveOffObjective : Objective
             else
             {
                 currentHoldTime = 0f;
-                if (progressBar != null)
-                {
-                    UpdateProgressBar(0f);
-                }
+                UpdateProgressBar(0f);
+                progressBar.gameObject.SetActive(false);
             }
         }
     }

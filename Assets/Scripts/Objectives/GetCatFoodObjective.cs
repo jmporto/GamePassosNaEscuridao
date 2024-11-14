@@ -17,33 +17,6 @@ public class GetCatFoodObjective : Objective
         {
             progressBar.gameObject.SetActive(false);
         }
-
-        if (interactionText != null)
-        {
-            interactionText.gameObject.SetActive(false);
-        }
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player"))
-        {
-            if (interactionText != null)
-            {
-                interactionText.gameObject.SetActive(true);
-            }
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player"))
-        {
-            if (interactionText != null)
-            {
-                interactionText.gameObject.SetActive(false);
-            }
-        }
     }
 
     public override void CheckObjectiveProgress()
