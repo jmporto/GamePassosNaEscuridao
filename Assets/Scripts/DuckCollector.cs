@@ -64,6 +64,7 @@ public class DuckCollector : MonoBehaviour
             collectedDucksText.text = "Patos Coletados: " + collectedDucks + "/8";
 
             DuckInfo duckInfo = currentDuck.GetComponent<DuckInfo>();
+
             if (duckInfo != null)
             {
                 infoText.text = duckInfo.GetInfoMessage();
