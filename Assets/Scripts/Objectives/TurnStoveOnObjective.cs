@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class TurnStoveOnObjective : Objective
 {
@@ -9,6 +8,8 @@ public class TurnStoveOnObjective : Objective
     private float currentHoldTime = 0f;
     public float activationRange = 1f;
     private GameObject player;
+    public GameObject stoveLitPrefab;
+    public GameObject stoveObject;
 
     void Start()
     {
@@ -47,6 +48,7 @@ public class TurnStoveOnObjective : Objective
                 if (currentHoldTime >= requiredHoldTime)
                 {
                     CompleteObjective();
+                    ReplaceStove();
                 }
             }
             else
@@ -55,6 +57,21 @@ public class TurnStoveOnObjective : Objective
                 UpdateProgressBar(0f);
                 progressBar.gameObject.SetActive(false);
             }
+        }
+    }
+
+    private void ReplaceStove()
+    {
+        if (stoveObject != null && stoveLitPrefab != null)
+        {
+            Transform stoveTransform = stoveObject.transform;
+            Vector3 position = stoveTransform.position;
+            Quaternion rotation = stoveTransform.rotation;
+            Transform parent = stoveTransform.parent;
+
+            Destroy(stoveObject);
+
+            stoveObject = Instantiate(stoveLitPrefab, position, rotation, parent);
         }
     }
 }
