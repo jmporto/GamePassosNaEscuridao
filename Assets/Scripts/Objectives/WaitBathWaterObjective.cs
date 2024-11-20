@@ -10,6 +10,10 @@ public class WaitBathWaterObjective : Objective
     private float currentWaitTime = 0f;
     public TextMeshProUGUI countdownText;
     private bool isPlayerInArea = false;
+    public GameObject[] bathtubPrefabs;
+    public GameObject bathtubObject;
+
+    private int currentLevelIndex = 0;
 
     private void Start()
     {
@@ -35,6 +39,8 @@ public class WaitBathWaterObjective : Objective
             {
                 countdownText.text = "Tempo restante: " + timeRemaining + " segundos";
             }
+
+            UpdateBathtubLevel();
 
             if (currentWaitTime >= totalWaitTime)
             {
@@ -80,6 +86,41 @@ public class WaitBathWaterObjective : Objective
             }
         }
     }
+
+    private void UpdateBathtubLevel()
+    {
+        // Calcular o índice do prefab com base no progresso
+        int totalLevels = bathtubPrefabs.Length;
+        float progress = currentWaitTime / totalWaitTime;
+        int levelIndex = Mathf.Clamp(Mathf.FloorToInt(progress * totalLevels), 0, totalLevels - 1);
+
+        // Se o nível mudou, substitua o prefab
+        if (levelIndex != currentLevelIndex)
+        {
+            currentLevelIndex = levelIndex;
+
+            // Substituir o prefab
+            ReplaceBathtubModel(bathtubPrefabs[currentLevelIndex]);
+        }
+    }
+
+    private void ReplaceBathtubModel(GameObject newPrefab)
+    {
+        if (bathtubObject != null)
+        {
+            Transform bathtubTransform = bathtubObject.transform;
+            Vector3 position = bathtubTransform.position;
+            Quaternion rotation = bathtubTransform.rotation;
+            Transform parent = bathtubTransform.parent;
+
+            // Destruir o modelo atual
+            Destroy(bathtubObject);
+
+            // Instanciar o novo modelo
+            bathtubObject = Instantiate(newPrefab, position, rotation, parent);
+        }
+    }
+
     public override void CheckObjectiveProgress() {}
 
 }
