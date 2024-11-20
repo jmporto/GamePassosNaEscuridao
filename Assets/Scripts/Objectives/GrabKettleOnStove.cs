@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UIElements;
 
-public class GetCatFoodObjective : Objective
+public class GrabKettleOnStove : Objective
 {
-    public GameObject foodPrefab;
     private bool hasInteracted = false;
 
     private void Start()
@@ -23,9 +23,10 @@ public class GetCatFoodObjective : Objective
             if (Input.GetButtonDown("VERDE0") && !hasInteracted)
             {
                 hasInteracted = true;
-                if (foodPrefab != null)
+                if (PrepareCoffeeObjective.instantiatedKettle != null)
                 {
-                    Destroy(foodPrefab);
+                    Destroy(PrepareCoffeeObjective.instantiatedKettle);
+                    PrepareCoffeeObjective.instantiatedKettle = null;
                 }
 
                 CompleteObjective();

@@ -10,7 +10,7 @@ public class PrepareCoffeeObjective : Objective
     private GameObject player;
     public GameObject kettlePrefab;
     public Transform spawnLocation;
-    private GameObject instantiatedKettle;
+    public static GameObject instantiatedKettle;
 
 
     private Vector3 scaleAdjustment = new Vector3(0.5f, 0.5f, 0.5f);

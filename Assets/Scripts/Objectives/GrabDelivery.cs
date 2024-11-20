@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class GetCatFoodObjective : Objective
+public class GrabDelivery : Objective
 {
-    public GameObject foodPrefab;
+    public GameObject deliveryPrefab;
     private bool hasInteracted = false;
 
     private void Start()
@@ -23,9 +23,9 @@ public class GetCatFoodObjective : Objective
             if (Input.GetButtonDown("VERDE0") && !hasInteracted)
             {
                 hasInteracted = true;
-                if (foodPrefab != null)
+                if (deliveryPrefab != null)
                 {
-                    Destroy(foodPrefab);
+                    Destroy(deliveryPrefab);
                 }
 
                 CompleteObjective();
