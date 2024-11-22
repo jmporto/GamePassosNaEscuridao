@@ -9,8 +9,15 @@ public abstract class Objective : MonoBehaviour
     public TextMeshProUGUI objectiveText;
     public Slider progressBar;
     public string description;
-
     protected bool isCompleted = false;
+    public AudioSource sucessAudio;
+
+    void Start()
+    {
+        // (Opcional) Se o AudioSource estiver no mesmo GameObject
+        if (sucessAudio == null)
+            sucessAudio = GetComponent<AudioSource>();
+    }
 
     public virtual void StartObjective()
     {
@@ -42,5 +49,7 @@ public abstract class Objective : MonoBehaviour
     {
         isCompleted = true;
         progressBar.gameObject.SetActive(false);
+        if (sucessAudio != null)
+            sucessAudio.Play();
     }
 }

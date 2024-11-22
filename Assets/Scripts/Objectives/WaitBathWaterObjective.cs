@@ -12,7 +12,7 @@ public class WaitBathWaterObjective : Objective
     private bool isPlayerInArea = false;
     public GameObject[] bathtubPrefabs;
     public GameObject bathtubObject;
-
+    public GameObject duckPrefab;
     private int currentLevelIndex = 0;
 
     private void Start()
@@ -45,9 +45,15 @@ public class WaitBathWaterObjective : Objective
             if (currentWaitTime >= totalWaitTime)
             {
                 CompleteObjective();
+
                 if (countdownText != null)
                 {
                     countdownText.gameObject.SetActive(false);
+                }
+
+                if (duckPrefab != null)
+                {
+                    duckPrefab.SetActive(true);
                 }
             }
         }

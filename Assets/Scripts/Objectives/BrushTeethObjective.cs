@@ -8,10 +8,18 @@ public class BrushTeethObjective : Objective
     private float currentHoldTime = 0f;
     public float activationRange = 1f;
     private GameObject player;
+    public AudioSource waterRunningAudio;
+    public AudioSource brushingTeethAudio;
 
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+
+        if (!waterRunningAudio.isPlaying)
+        {
+            waterRunningAudio.loop = true;
+            waterRunningAudio.Play();
+        }
     }
 
     void Update()
@@ -43,9 +51,18 @@ public class BrushTeethObjective : Objective
                 UpdateProgressBar(currentHoldTime / requiredHoldTime);
                 progressBar.gameObject.SetActive(true);
 
+                if (!brushingTeethAudio.isPlaying)
+                    brushingTeethAudio.Play();
+
                 if (currentHoldTime >= requiredHoldTime)
                 {
                     CompleteObjective();
+
+                    if (waterRunningAudio.isPlaying)
+                        waterRunningAudio.Stop();
+
+                    if (brushingTeethAudio.isPlaying)
+                        brushingTeethAudio.Stop();
                 }
             }
             else
@@ -53,6 +70,7 @@ public class BrushTeethObjective : Objective
                 currentHoldTime = 0f;
                 UpdateProgressBar(0f);
                 progressBar.gameObject.SetActive(false);
+                brushingTeethAudio.Stop();
             }
         }
     }

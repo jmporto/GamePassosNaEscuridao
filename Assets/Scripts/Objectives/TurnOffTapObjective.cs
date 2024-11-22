@@ -8,10 +8,18 @@ public class TurnOffTapObjective : Objective
     private float currentHoldTime = 0f;
     public float activationRange = 1f;
     private GameObject player;
+    public AudioSource waterRunningAudio;  // Áudio tocado antes de pressionar o botão
+    public AudioSource turnOffFaucetAudio;
 
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+
+        if (!waterRunningAudio.isPlaying)
+        {
+            waterRunningAudio.loop = true;
+            waterRunningAudio.Play();
+        }
     }
 
     void Update()
@@ -43,9 +51,21 @@ public class TurnOffTapObjective : Objective
                 UpdateProgressBar(currentHoldTime / requiredHoldTime);
                 progressBar.gameObject.SetActive(true);
 
+                if (!turnOffFaucetAudio.isPlaying)
+                    turnOffFaucetAudio.Play();
+
+                if (waterRunningAudio.isPlaying)
+                    waterRunningAudio.Stop();
+
                 if (currentHoldTime >= requiredHoldTime)
                 {
                     CompleteObjective();
+
+                    if (waterRunningAudio.isPlaying)
+                        waterRunningAudio.Stop();
+
+                    if (turnOffFaucetAudio.isPlaying)
+                        turnOffFaucetAudio.Stop();
                 }
             }
             else
@@ -53,6 +73,10 @@ public class TurnOffTapObjective : Objective
                 currentHoldTime = 0f;
                 UpdateProgressBar(0f);
                 progressBar.gameObject.SetActive(false);
+                turnOffFaucetAudio.Stop();
+
+                if (!waterRunningAudio.isPlaying)
+                    waterRunningAudio.Play();
             }
         }
     }

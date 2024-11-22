@@ -8,6 +8,8 @@ public class TurnOnTapObjective : Objective
     private float currentHoldTime = 0f;
     public float activationRange = 1f;
     private GameObject player;
+    public AudioSource turnOnFaucetAudio;
+    private bool isPlaying = false;
 
     void Start()
     {
@@ -29,6 +31,9 @@ public class TurnOnTapObjective : Objective
                 progressBar.gameObject.SetActive(false);
                 currentHoldTime = 0f;
                 UpdateProgressBar(0f);
+                StopAllCoroutines();
+                turnOnFaucetAudio.Stop();
+                isPlaying = false;
             }
         }
     }
@@ -43,6 +48,9 @@ public class TurnOnTapObjective : Objective
                 UpdateProgressBar(currentHoldTime / requiredHoldTime);
                 progressBar.gameObject.SetActive(true);
 
+                if (!isPlaying)
+                    StartCoroutine(PlayAudioLoop());
+
                 if (currentHoldTime >= requiredHoldTime)
                 {
                     CompleteObjective();
@@ -55,5 +63,18 @@ public class TurnOnTapObjective : Objective
                 progressBar.gameObject.SetActive(false);
             }
         }
+    }
+
+    private IEnumerator PlayAudioLoop()
+    {
+        isPlaying = true;
+
+        while (currentHoldTime < requiredHoldTime)
+        {
+            turnOnFaucetAudio.Play(); // Toca o áudio
+            yield return new WaitForSeconds(turnOnFaucetAudio.clip.length); // Espera o fim do clipe
+        }
+
+        isPlaying = false;
     }
 }
