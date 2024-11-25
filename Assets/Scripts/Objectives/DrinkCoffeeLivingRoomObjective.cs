@@ -35,6 +35,7 @@ public class DrinkCoffeeLivingRoomObjective : Objective
                 progressBar.gameObject.SetActive(false);
                 currentHoldTime = 0f;
                 UpdateProgressBar(0f);
+                drinkPour.Stop();
             }
         }
     }

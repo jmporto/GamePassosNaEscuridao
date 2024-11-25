@@ -30,6 +30,7 @@ public class FillKettleWithWaterObjective : Objective
                 progressBar.gameObject.SetActive(false);
                 currentHoldTime = 0f;
                 UpdateProgressBar(0f);
+                waterFilling.Stop();
             }
         }
     }
