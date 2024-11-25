@@ -14,7 +14,6 @@ public abstract class Objective : MonoBehaviour
 
     void Start()
     {
-        // (Opcional) Se o AudioSource estiver no mesmo GameObject
         if (sucessAudio == null)
             sucessAudio = GetComponent<AudioSource>();
     }
