@@ -1,13 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 
 public class FindCoffeeCupObjective : Objective
 {
     public GameObject coffeeCup;
-    public TextMeshProUGUI interactionText;
-
+    public AudioSource ceramicClank;
 
     private void Start()
     {
@@ -24,6 +22,9 @@ public class FindCoffeeCupObjective : Objective
             Destroy(coffeeCup);
 
             CompleteObjective();
+
+            if (!ceramicClank.isPlaying)
+                    ceramicClank.Play();
         }
     }
 }
