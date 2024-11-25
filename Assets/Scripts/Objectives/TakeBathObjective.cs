@@ -30,6 +30,7 @@ public class TakeBathObjective : Objective
                 progressBar.gameObject.SetActive(false);
                 currentHoldTime = 0f;
                 UpdateProgressBar(0f);
+                bathTubWaterSplashing.Stop();
             }
         }
     }

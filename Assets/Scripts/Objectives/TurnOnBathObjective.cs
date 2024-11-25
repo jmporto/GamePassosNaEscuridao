@@ -30,6 +30,7 @@ public class TurnOnBathObjective : Objective
                 progressBar.gameObject.SetActive(false);
                 currentHoldTime = 0f;
                 UpdateProgressBar(0f);
+                turnBathOn.Stop();
             }
         }
     }

@@ -31,6 +31,7 @@ public class WashCoffeeCupObjective : Objective
                 progressBar.gameObject.SetActive(false);
                 currentHoldTime = 0f;
                 UpdateProgressBar(0f);
+                washingDishes.Stop();
             }
         }
     }

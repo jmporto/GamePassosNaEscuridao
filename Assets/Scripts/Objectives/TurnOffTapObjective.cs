@@ -8,7 +8,7 @@ public class TurnOffTapObjective : Objective
     private float currentHoldTime = 0f;
     public float activationRange = 1f;
     private GameObject player;
-    public AudioSource waterRunningAudio;  // Áudio tocado antes de pressionar o botão
+    public AudioSource waterRunningAudio;  // ï¿½udio tocado antes de pressionar o botï¿½o
     public AudioSource turnOffFaucetAudio;
 
     void Start()
@@ -37,6 +37,7 @@ public class TurnOffTapObjective : Objective
                 progressBar.gameObject.SetActive(false);
                 currentHoldTime = 0f;
                 UpdateProgressBar(0f);
+                turnOffFaucetAudio.Stop();
             }
         }
     }

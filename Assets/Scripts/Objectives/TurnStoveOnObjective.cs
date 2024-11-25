@@ -32,6 +32,7 @@ public class TurnStoveOnObjective : Objective
                 progressBar.gameObject.SetActive(false);
                 currentHoldTime = 0f;
                 UpdateProgressBar(0f);
+                turnOnStove.Stop();
             }
         }
     }
