@@ -14,7 +14,6 @@ public class WaitBathWaterObjective : Objective
     public GameObject bathtubObject;
     public GameObject duckPrefab;
     private int currentLevelIndex = 0;
-    public AudioSource bathTubWaterFilling;
 
     private void Start()
     {
@@ -43,10 +42,6 @@ public class WaitBathWaterObjective : Objective
 
             UpdateBathtubLevel();
 
-            if (!bathTubWaterFilling.isPlaying)
-                    bathTubWaterFilling.Play();
-
-
             if (currentWaitTime >= totalWaitTime)
             {
                 CompleteObjective();
@@ -60,9 +55,6 @@ public class WaitBathWaterObjective : Objective
                 {
                     duckPrefab.SetActive(true);
                 }
-
-                if (bathTubWaterFilling.isPlaying)
-                        bathTubWaterFilling.Stop();
             }
         }
     }
@@ -98,19 +90,17 @@ public class WaitBathWaterObjective : Objective
             {
                 progressBar.gameObject.SetActive(false);
             }
-            if (bathTubWaterFilling.isPlaying)
-                        bathTubWaterFilling.Stop();
         }
     }
 
     private void UpdateBathtubLevel()
     {
-        // Calcular o ï¿½ndice do prefab com base no progresso
+        // Calcular o índice do prefab com base no progresso
         int totalLevels = bathtubPrefabs.Length;
         float progress = currentWaitTime / totalWaitTime;
         int levelIndex = Mathf.Clamp(Mathf.FloorToInt(progress * totalLevels), 0, totalLevels - 1);
 
-        // Se o nï¿½vel mudou, substitua o prefab
+        // Se o nível mudou, substitua o prefab
         if (levelIndex != currentLevelIndex)
         {
             currentLevelIndex = levelIndex;
