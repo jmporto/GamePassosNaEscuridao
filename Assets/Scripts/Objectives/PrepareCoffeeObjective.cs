@@ -11,6 +11,7 @@ public class PrepareCoffeeObjective : Objective
     public GameObject kettlePrefab;
     public Transform spawnLocation;
     public static GameObject instantiatedKettle;
+    public AudioSource waterBolling;
 
 
     private Vector3 scaleAdjustment = new Vector3(0.5f, 0.5f, 0.5f);
@@ -60,9 +61,14 @@ public class PrepareCoffeeObjective : Objective
                 UpdateProgressBar(currentHoldTime / requiredHoldTime);
                 progressBar.gameObject.SetActive(true);
 
+                if (!waterBolling.isPlaying)
+                    waterBolling.Play();
+
                 if (currentHoldTime >= requiredHoldTime)
                 {
                     CompleteObjective();
+                    if (waterBolling.isPlaying)
+                        waterBolling.Stop();
                 }
             }
             else
@@ -70,6 +76,7 @@ public class PrepareCoffeeObjective : Objective
                 currentHoldTime = 0f;
                 UpdateProgressBar(0f);
                 progressBar.gameObject.SetActive(false);
+                waterBolling.Stop();
             }
         }
     }
