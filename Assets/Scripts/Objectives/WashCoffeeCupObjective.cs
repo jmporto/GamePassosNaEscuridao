@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class WashCoffeeCupObjective : Objective
 {
@@ -8,7 +9,6 @@ public class WashCoffeeCupObjective : Objective
     private float currentHoldTime = 0f;
     public float activationRange = 1f;
     private GameObject player;
-    public AudioSource washingDishes;
 
     void Start()
     {
@@ -44,15 +44,9 @@ public class WashCoffeeCupObjective : Objective
                 UpdateProgressBar(currentHoldTime / requiredHoldTime);
                 progressBar.gameObject.SetActive(true);
 
-                if (!washingDishes.isPlaying)
-                    washingDishes.Play();
-
                 if (currentHoldTime >= requiredHoldTime)
                 {
                     CompleteObjective();
-
-                    if (washingDishes.isPlaying)
-                        washingDishes.Stop();
                 }
             }
             else
@@ -60,7 +54,6 @@ public class WashCoffeeCupObjective : Objective
                 currentHoldTime = 0f;
                 UpdateProgressBar(0f);
                 progressBar.gameObject.SetActive(false);
-                washingDishes.Stop();
             }
         }
     }
