@@ -7,6 +7,7 @@ public class GetCatFoodObjective : Objective
 {
     public GameObject foodPrefab;
     private bool hasInteracted = false;
+    public AudioSource pickUpFood;
 
     private void Start()
     {
@@ -29,6 +30,9 @@ public class GetCatFoodObjective : Objective
                 }
 
                 CompleteObjective();
+
+                if (pickUpFood != null)
+                    pickUpFood.Play();
             }
         }
     }

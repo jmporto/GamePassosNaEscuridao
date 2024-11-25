@@ -7,6 +7,7 @@ public class GetKettleObjective : Objective
 {
     public GameObject kettlePrefab;
     public TextMeshProUGUI interactionText;
+    public AudioSource metalPickUp;
 
 
     private void Start()
@@ -24,6 +25,9 @@ public class GetKettleObjective : Objective
             Destroy(kettlePrefab);
 
             CompleteObjective();
+
+            if (metalPickUp != null)
+                    metalPickUp.Play();
         }
     }
 }
