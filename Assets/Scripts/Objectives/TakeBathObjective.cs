@@ -9,6 +9,7 @@ public class TakeBathObjective : Objective
     private float currentHoldTime = 0f;
     public float activationRange = 1f;
     private GameObject player;
+    public AudioSource bathTubWaterSplashing;
 
     void Start()
     {
@@ -43,10 +44,14 @@ public class TakeBathObjective : Objective
                 currentHoldTime += Time.deltaTime;
                 UpdateProgressBar(currentHoldTime / requiredHoldTime);
                 progressBar.gameObject.SetActive(true);
+                if (!bathTubWaterSplashing.isPlaying)
+                    bathTubWaterSplashing.Play();
 
                 if (currentHoldTime >= requiredHoldTime)
                 {
                     CompleteObjective();
+                    if (bathTubWaterSplashing.isPlaying)
+                        bathTubWaterSplashing.Stop();
                 }
             }
             else
@@ -54,6 +59,7 @@ public class TakeBathObjective : Objective
                 currentHoldTime = 0f;
                 UpdateProgressBar(0f);
                 progressBar.gameObject.SetActive(false);
+                bathTubWaterSplashing.Stop();
             }
         }
     }
