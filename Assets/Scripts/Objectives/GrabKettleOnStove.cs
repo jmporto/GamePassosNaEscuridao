@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class GrabKettleOnStove : Objective
 {
     private bool hasInteracted = false;
-    public AudioSource metalClank;
 
     private void Start()
     {
@@ -29,9 +30,6 @@ public class GrabKettleOnStove : Objective
                 }
 
                 CompleteObjective();
-
-                if (!metalClank.isPlaying)
-                    metalClank.Play();
             }
         }
     }

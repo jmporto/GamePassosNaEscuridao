@@ -8,7 +8,6 @@ public class TurnOnBathObjective : Objective
     private float currentHoldTime = 0f;
     public float activationRange = 1f;
     private GameObject player;
-    public AudioSource turnBathOn;
 
     void Start()
     {
@@ -44,14 +43,9 @@ public class TurnOnBathObjective : Objective
                 UpdateProgressBar(currentHoldTime / requiredHoldTime);
                 progressBar.gameObject.SetActive(true);
 
-                if (!turnBathOn.isPlaying)
-                    turnBathOn.Play();
-
                 if (currentHoldTime >= requiredHoldTime)
                 {
                     CompleteObjective();
-                    if (turnBathOn.isPlaying)
-                        turnBathOn.Stop();
                 }
             }
             else
@@ -59,7 +53,6 @@ public class TurnOnBathObjective : Objective
                 currentHoldTime = 0f;
                 UpdateProgressBar(0f);
                 progressBar.gameObject.SetActive(false);
-                turnBathOn.Stop();
             }
         }
     }
