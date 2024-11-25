@@ -13,13 +13,17 @@ public class DuckCollector : MonoBehaviour
     private GameObject currentDuck;
     private bool isNearDuck = false;
     public bool canMove = true;
+    public GameObject infoPanel;
+    public GameObject continueBackground;
 
     private void Start()
     {
-        collectedDucksText.text = "??? Coletados: 0/8";
+        collectedDucksText.text = "(?) Coletados: 0/8";
         infoText.gameObject.SetActive(false);
         interactionText.gameObject.SetActive(false);
         continueText.gameObject.SetActive(false);
+        infoPanel.SetActive(false);
+        continueBackground.SetActive(false);
     }
 
     private void Update()
@@ -70,7 +74,7 @@ public class DuckCollector : MonoBehaviour
             }
             else
             {
-                infoText.text = "Você coletou um pato!";
+                infoText.text = "Voce coletou um pato!";
             }
 
             canMove = false;
@@ -90,15 +94,18 @@ public class DuckCollector : MonoBehaviour
         yield return null;
 
         infoText.gameObject.SetActive(true);
-        continueText.text = "Aperte R ou Verde para continuar";
+        continueText.text = "Aperte R/Verde para continuar";
         continueText.gameObject.SetActive(true);
+        infoPanel.SetActive(true);
+        continueBackground.SetActive(true);
     }
 
     private void CloseMessage()
     {
+        infoPanel.SetActive(false);
+        continueBackground.SetActive(false);
         infoText.gameObject.SetActive(false);
         continueText.gameObject.SetActive(false);
-
         canMove = true;
     }
 }
