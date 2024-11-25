@@ -9,6 +9,7 @@ public class FillKettleWithWaterObjective : Objective
     private float currentHoldTime = 0f;
     public float activationRange = 1f;
     private GameObject player;
+    public AudioSource waterFilling;
 
     void Start()
     {
@@ -44,9 +45,17 @@ public class FillKettleWithWaterObjective : Objective
                 UpdateProgressBar(currentHoldTime / requiredHoldTime);
                 progressBar.gameObject.SetActive(true);
 
+                if (!waterFilling.isPlaying)
+                    waterFilling.Play();
+
+
                 if (currentHoldTime >= requiredHoldTime)
                 {
                     CompleteObjective();
+
+                    if (!waterFilling.isPlaying)
+                        waterFilling.Play();
+
                 }
             }
             else
@@ -54,6 +63,7 @@ public class FillKettleWithWaterObjective : Objective
                 currentHoldTime = 0f;
                 UpdateProgressBar(0f);
                 progressBar.gameObject.SetActive(false);
+                waterFilling.Stop();
             }
         }
     }
