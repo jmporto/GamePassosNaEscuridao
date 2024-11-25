@@ -1,14 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UIElements;
+
 
 public class PutCatFoodInBowlObjective : Objective
 {
     public GameObject emptyBowlPrefab;
     public GameObject fullBowlPrefab;
-    public TextMeshProUGUI interactionText;
+    public AudioSource putDownFood;
+
 
     private bool hasInteracted = false;
 
@@ -35,6 +35,9 @@ public class PutCatFoodInBowlObjective : Objective
                 }
 
                 CompleteObjective();
+
+                if (putDownFood != null)
+                    putDownFood.Play();
             }
         }
     }
