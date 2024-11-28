@@ -53,7 +53,7 @@ public class PlayerController : MonoBehaviour
                     cardinalDirection = ECardinalDirection.Down;
             }
 
-            animator.SetFloat("cardinalDir",(int)cardinalDirection);
+            animator.SetFloat("CardinalDir", (int)cardinalDirection);
             animator.SetFloat("x", movement.x);
             animator.SetFloat("y", movement.y);
             animator.SetBool("Moving", movement.magnitude > 0);
