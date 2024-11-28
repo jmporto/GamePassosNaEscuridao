@@ -29,6 +29,11 @@ public class GrabDelivery : Objective
                 }
 
                 CompleteObjective();
+
+                if (!ObjectiveAudioManager.Instance.IsPlaying("Book1second"))
+                {
+                    ObjectiveAudioManager.Instance.PlayObjectiveAudio("Book1second", 0);
+                }
             }
         }
     }

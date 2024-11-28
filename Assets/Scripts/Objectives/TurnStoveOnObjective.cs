@@ -10,7 +10,6 @@ public class TurnStoveOnObjective : Objective
     private GameObject player;
     public GameObject stoveLitPrefab;
     public GameObject stoveObject;
-    public AudioSource turnOnStove;
 
     void Start()
     {
@@ -32,7 +31,7 @@ public class TurnStoveOnObjective : Objective
                 progressBar.gameObject.SetActive(false);
                 currentHoldTime = 0f;
                 UpdateProgressBar(0f);
-                turnOnStove.Stop();
+                ObjectiveAudioManager.Instance.Stop("StoveOn");
             }
         }
     }
@@ -47,16 +46,17 @@ public class TurnStoveOnObjective : Objective
                 UpdateProgressBar(currentHoldTime / requiredHoldTime);
                 progressBar.gameObject.SetActive(true);
 
-                if (!turnOnStove.isPlaying)
-                    turnOnStove.Play();
+                if (!ObjectiveAudioManager.Instance.IsPlaying("StoveOn"))
+                {
+                    ObjectiveAudioManager.Instance.PlayObjectiveAudio("StoveOn", 0);
+                }
 
                 if (currentHoldTime >= requiredHoldTime)
                 {
                     CompleteObjective();
                     ReplaceStove();
 
-                    if (turnOnStove.isPlaying)
-                        turnOnStove.Stop();
+                    ObjectiveAudioManager.Instance.Stop("StoveOn");
                 }
             }
             else
@@ -64,7 +64,7 @@ public class TurnStoveOnObjective : Objective
                 currentHoldTime = 0f;
                 UpdateProgressBar(0f);
                 progressBar.gameObject.SetActive(false);
-                turnOnStove.Stop();
+                ObjectiveAudioManager.Instance.Stop("StoveOn");
             }
         }
     }

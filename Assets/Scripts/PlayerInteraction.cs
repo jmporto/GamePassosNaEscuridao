@@ -14,7 +14,6 @@ public class PlayerInteraction : MonoBehaviour
     {
         if (collision.CompareTag("Objective"))
         {
-            Debug.Log("Entrou no objetivo!");
             currentObjective = collision.GetComponent<Objective>();
 
             if (currentObjective != null && !currentObjective.IsCompleted())
@@ -41,7 +40,6 @@ public class PlayerInteraction : MonoBehaviour
         {
             if (currentObjective is WaitBathWaterObjective)
             {
-                // Hide the interaction prompt for WaitBathTime objective
                 HideInteractionPrompt();
             }
 

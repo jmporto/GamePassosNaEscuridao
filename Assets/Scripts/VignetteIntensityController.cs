@@ -7,14 +7,13 @@ public class VignetteIntensityController : MonoBehaviour
 {
     public PostProcessProfile postProcessProfile;
     private Vignette vignette;
-    private float duration = 120f; // 2 minutos
+    private float duration = 120f;
     private float startTime;
     private float initialIntensity = 0.5f;
     private float targetIntensity = 1.0f;
 
     void Start()
     {
-        // Tenta obter a configuração de Vignette do perfil
         vignette = postProcessProfile.GetSetting<Vignette>();
 
         if (vignette != null)

@@ -13,7 +13,6 @@ public class PlaceBookTable : Objective
     public Transform spawnPoint;
     public float activationRange = 1f;
     private GameObject player;
-    public AudioSource bookDown;
     public static GameObject instantiatedBook;
 
     void Start()
@@ -36,7 +35,7 @@ public class PlaceBookTable : Objective
                 progressBar.gameObject.SetActive(false);
                 currentHoldTime = 0f;
                 UpdateProgressBar(0f);
-                bookDown.Stop();
+                ObjectiveAudioManager.Instance.Stop("Book3seconds");
             }
         }
     }
@@ -51,16 +50,17 @@ public class PlaceBookTable : Objective
                 UpdateProgressBar(currentHoldTime / requiredHoldTime);
                 progressBar.gameObject.SetActive(true);
 
-                if (!bookDown.isPlaying)
-                    bookDown.Play();
+                if (!ObjectiveAudioManager.Instance.IsPlaying("Book3seconds"))
+                {
+                    ObjectiveAudioManager.Instance.PlayObjectiveAudio("Book3seconds", 0);
+                }
 
                 if (currentHoldTime >= requiredHoldTime)
                 {
                     CompleteObjective();
                     InstantiatePrefabs();
 
-                    if (bookDown.isPlaying)
-                        bookDown.Stop();
+                    ObjectiveAudioManager.Instance.Stop("Book3seconds");
                 }
             }
             else
@@ -68,7 +68,7 @@ public class PlaceBookTable : Objective
                 currentHoldTime = 0f;
                 UpdateProgressBar(0f);
                 progressBar.gameObject.SetActive(false);
-                bookDown.Stop();
+                ObjectiveAudioManager.Instance.Stop("Book3seconds");
             }
         }
     }

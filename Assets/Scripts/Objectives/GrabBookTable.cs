@@ -5,7 +5,6 @@ using UnityEngine;
 public class GrabBookTable : Objective
 {
     private bool hasInteracted = false;
-    public AudioSource pickBook;
 
     private void Start()
     {
@@ -30,8 +29,10 @@ public class GrabBookTable : Objective
 
                 CompleteObjective();
 
-                if (!pickBook.isPlaying)
-                    pickBook.Play();
+                if (!ObjectiveAudioManager.Instance.IsPlaying("Book1second"))
+                {
+                    ObjectiveAudioManager.Instance.PlayObjectiveAudio("Book1second", 0);
+                }
             }
         }
     }

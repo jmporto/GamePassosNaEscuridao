@@ -8,8 +8,6 @@ public class WashCoffeeCupObjective : Objective
     private float currentHoldTime = 0f;
     public float activationRange = 1f;
     private GameObject player;
-    public AudioSource washingDishes;
-
 
     void Start()
     {
@@ -31,7 +29,7 @@ public class WashCoffeeCupObjective : Objective
                 progressBar.gameObject.SetActive(false);
                 currentHoldTime = 0f;
                 UpdateProgressBar(0f);
-                washingDishes.Stop();
+                ObjectiveAudioManager.Instance.Stop("WashingDishes");
             }
         }
     }
@@ -46,15 +44,16 @@ public class WashCoffeeCupObjective : Objective
                 UpdateProgressBar(currentHoldTime / requiredHoldTime);
                 progressBar.gameObject.SetActive(true);
 
-                 if (!washingDishes.isPlaying)
-                    washingDishes.Play();
+                if (!ObjectiveAudioManager.Instance.IsPlaying("WashingDishes"))
+                {
+                    ObjectiveAudioManager.Instance.PlayObjectiveAudio("WashingDishes", 0);
+                }
 
                 if (currentHoldTime >= requiredHoldTime)
                 {
                     CompleteObjective();
 
-                    if (washingDishes.isPlaying)
-                        washingDishes.Stop();
+                    ObjectiveAudioManager.Instance.Stop("WashingDishes");
                 }
             }
             else
@@ -62,7 +61,7 @@ public class WashCoffeeCupObjective : Objective
                 currentHoldTime = 0f;
                 UpdateProgressBar(0f);
                 progressBar.gameObject.SetActive(false);
-                washingDishes.Stop();
+                ObjectiveAudioManager.Instance.Stop("WashingDishes");
             }
         }
     }

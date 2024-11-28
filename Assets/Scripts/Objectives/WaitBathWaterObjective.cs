@@ -13,7 +13,6 @@ public class WaitBathWaterObjective : Objective
     public GameObject bathtubObject;
     public GameObject duckPrefab;
     private int currentLevelIndex = 0;
-    public AudioSource bathTubWaterFilling;
 
     private void Start()
     {
@@ -24,7 +23,7 @@ public class WaitBathWaterObjective : Objective
 
         if (progressBar != null)
         {
-            progressBar.gameObject.SetActive(false); // Esconde a barra de progresso
+            progressBar.gameObject.SetActive(false);
         }
     }
 
@@ -42,8 +41,10 @@ public class WaitBathWaterObjective : Objective
 
             UpdateBathtubLevel();
 
-            if (!bathTubWaterFilling.isPlaying)
-                    bathTubWaterFilling.Play();
+            if (!ObjectiveAudioManager.Instance.IsPlaying("BathTubWaterRunning"))
+                {
+                    ObjectiveAudioManager.Instance.PlayObjectiveAudio("BathTubWaterRunning", 0);
+                }
 
             if (currentWaitTime >= totalWaitTime)
             {
@@ -59,8 +60,7 @@ public class WaitBathWaterObjective : Objective
                     duckPrefab.SetActive(true);
                 }
 
-                if (bathTubWaterFilling.isPlaying)
-                        bathTubWaterFilling.Stop();
+                ObjectiveAudioManager.Instance.Stop("BathTubWaterRunning");
             }
         }
     }
@@ -97,8 +97,7 @@ public class WaitBathWaterObjective : Objective
                 progressBar.gameObject.SetActive(false);
             }
 
-            if (bathTubWaterFilling.isPlaying)
-                        bathTubWaterFilling.Stop();
+            ObjectiveAudioManager.Instance.Stop("BathTubWaterRunning");
         }
     }
 

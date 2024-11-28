@@ -8,18 +8,12 @@ public class BrushTeethObjective : Objective
     private float currentHoldTime = 0f;
     public float activationRange = 1f;
     private GameObject player;
-    public AudioSource waterRunningAudio;
-    public AudioSource brushingTeethAudio;
 
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
 
-        if (!waterRunningAudio.isPlaying)
-        {
-            waterRunningAudio.loop = true;
-            waterRunningAudio.Play();
-        }
+        ObjectiveAudioManager.Instance.PlayObjectiveAudio("WaterRunning", 0);
     }
 
     void Update()
@@ -37,7 +31,7 @@ public class BrushTeethObjective : Objective
                 progressBar.gameObject.SetActive(false);
                 currentHoldTime = 0f;
                 UpdateProgressBar(0f);
-                brushingTeethAudio.Stop();
+                ObjectiveAudioManager.Instance.Stop("BrushingTeeth");
 
             }
         }
@@ -53,18 +47,17 @@ public class BrushTeethObjective : Objective
                 UpdateProgressBar(currentHoldTime / requiredHoldTime);
                 progressBar.gameObject.SetActive(true);
 
-                if (!brushingTeethAudio.isPlaying)
-                    brushingTeethAudio.Play();
+                if (!ObjectiveAudioManager.Instance.IsPlaying("BrushingTeeth"))
+                {
+                    ObjectiveAudioManager.Instance.PlayObjectiveAudio("BrushingTeeth", 0);
+                }
 
                 if (currentHoldTime >= requiredHoldTime)
                 {
                     CompleteObjective();
 
-                    if (waterRunningAudio.isPlaying)
-                        waterRunningAudio.Stop();
-
-                    if (brushingTeethAudio.isPlaying)
-                        brushingTeethAudio.Stop();
+                    ObjectiveAudioManager.Instance.Stop("WaterRunning");
+                    ObjectiveAudioManager.Instance.Stop("BrushingTeeth");
                 }
             }
             else
@@ -72,7 +65,7 @@ public class BrushTeethObjective : Objective
                 currentHoldTime = 0f;
                 UpdateProgressBar(0f);
                 progressBar.gameObject.SetActive(false);
-                brushingTeethAudio.Stop();
+                ObjectiveAudioManager.Instance.Stop("BrushingTeeth");
             }
         }
     }
