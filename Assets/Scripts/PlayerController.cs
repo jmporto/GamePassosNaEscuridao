@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
+    public enum ECardinalDirection { Left, Right, Up, Down}
+    private ECardinalDirection cardinalDirection = ECardinalDirection.Down;
     public float moveSpeed = 3f;
     public Rigidbody2D rb;
     private Vector2 movement;
@@ -27,22 +28,32 @@ public class PlayerController : MonoBehaviour
             x0 = Input.GetAxis("HORIZONTAL0");
             y0 = Input.GetAxis("VERTICAL0");
 
-
+            Vector2 mov = new Vector2(x0, y0);
             movement = Vector2.zero;
 
 
-            if (Mathf.Abs(x0) > Mathf.Abs(y0))
+            if (Mathf.Abs(x0) > Mathf.Abs(y0) && mov.sqrMagnitude != 0)
             {
                 movement.x = x0;
                 movement.y = 0;
+
+                if (x0 > 0)
+                    cardinalDirection = ECardinalDirection.Left;
+                else
+                    cardinalDirection = ECardinalDirection.Right;
             }
-            else
+            else if (mov.sqrMagnitude != 0)
             {
                 movement.x = 0;
                 movement.y = y0;
+
+                if (y0 > 0)
+                    cardinalDirection = ECardinalDirection.Up;
+                else
+                    cardinalDirection = ECardinalDirection.Down;
             }
 
-
+            animator.SetFloat("cardinalDir",(int)cardinalDirection);
             animator.SetFloat("x", movement.x);
             animator.SetFloat("y", movement.y);
             animator.SetBool("Moving", movement.magnitude > 0);
