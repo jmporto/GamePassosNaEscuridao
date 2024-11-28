@@ -6,7 +6,6 @@ public class GetCatFoodObjective : Objective
 {
     public GameObject foodPrefab;
     private bool hasInteracted = false;
-    public AudioSource pickUpFood;
 
     private void Start()
     {
@@ -23,6 +22,7 @@ public class GetCatFoodObjective : Objective
             if (Input.GetButtonDown("VERDE0") && !hasInteracted)
             {
                 hasInteracted = true;
+
                 if (foodPrefab != null)
                 {
                     Destroy(foodPrefab);
@@ -30,8 +30,10 @@ public class GetCatFoodObjective : Objective
 
                 CompleteObjective();
 
-                if (pickUpFood != null)
-                    pickUpFood.Play();
+                if (!ObjectiveAudioManager.Instance.IsPlaying("FoodPickUp"))
+                {
+                    ObjectiveAudioManager.Instance.PlayObjectiveAudio("FoodPickUp", 0);
+                }
             }
         }
     }

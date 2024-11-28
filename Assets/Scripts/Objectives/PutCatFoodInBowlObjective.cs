@@ -7,9 +7,6 @@ public class PutCatFoodInBowlObjective : Objective
 {
     public GameObject emptyBowlPrefab;
     public GameObject fullBowlPrefab;
-    public AudioSource putDownFood;
-
-
     private bool hasInteracted = false;
 
     private void Start()
@@ -36,8 +33,10 @@ public class PutCatFoodInBowlObjective : Objective
 
                 CompleteObjective();
 
-                if (putDownFood != null)
-                    putDownFood.Play();
+                if (!ObjectiveAudioManager.Instance.IsPlaying("FoodSetDown"))
+                {
+                    ObjectiveAudioManager.Instance.PlayObjectiveAudio("FoodSetDown", 0);
+                }
             }
         }
     }

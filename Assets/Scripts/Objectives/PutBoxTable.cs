@@ -11,11 +11,7 @@ public class PutBoxTable : Objective
     public GameObject openBox;
     public Transform spawnLocation;
     public static GameObject instantiatedBox;
-    public AudioSource placeBox;
-
-
     private Vector3 scaleAdjustment = new Vector3(0.72f, 0.72f, 0.72f);
-
     private Vector3 positionAdjustment = new Vector3(-9.62f, 1.0f, 0f);
 
     void Start()
@@ -38,7 +34,7 @@ public class PutBoxTable : Objective
                 progressBar.gameObject.SetActive(false);
                 currentHoldTime = 0f;
                 UpdateProgressBar(0f);
-                placeBox.Stop();
+                ObjectiveAudioManager.Instance.Stop("OpenBox");
             }
         }
     }
@@ -62,14 +58,15 @@ public class PutBoxTable : Objective
                 UpdateProgressBar(currentHoldTime / requiredHoldTime);
                 progressBar.gameObject.SetActive(true);
 
-                if (!placeBox.isPlaying)
-                    placeBox.Play();
+                if (!ObjectiveAudioManager.Instance.IsPlaying("OpenBox"))
+                {
+                    ObjectiveAudioManager.Instance.PlayObjectiveAudio("OpenBox", 0);
+                }
 
                 if (currentHoldTime >= requiredHoldTime)
                 {
                     CompleteObjective();
-                    if (placeBox.isPlaying)
-                        placeBox.Stop();
+                    ObjectiveAudioManager.Instance.Stop("OpenBox");
                 }
             }
             else
@@ -77,7 +74,7 @@ public class PutBoxTable : Objective
                 currentHoldTime = 0f;
                 UpdateProgressBar(0f);
                 progressBar.gameObject.SetActive(false);
-                placeBox.Stop();
+                ObjectiveAudioManager.Instance.Stop("OpenBox");
             }
         }
     }

@@ -8,7 +8,6 @@ public class TurnOnBathObjective : Objective
     private float currentHoldTime = 0f;
     public float activationRange = 1f;
     private GameObject player;
-    public AudioSource turnBathOn;
 
     void Start()
     {
@@ -30,7 +29,7 @@ public class TurnOnBathObjective : Objective
                 progressBar.gameObject.SetActive(false);
                 currentHoldTime = 0f;
                 UpdateProgressBar(0f);
-                turnBathOn.Stop();
+                ObjectiveAudioManager.Instance.Stop("BathTubFaucetOn");
             }
         }
     }
@@ -45,14 +44,15 @@ public class TurnOnBathObjective : Objective
                 UpdateProgressBar(currentHoldTime / requiredHoldTime);
                 progressBar.gameObject.SetActive(true);
 
-                if (!turnBathOn.isPlaying)
-                    turnBathOn.Play();
+                if (!ObjectiveAudioManager.Instance.IsPlaying("BathTubFaucetOn"))
+                {
+                    ObjectiveAudioManager.Instance.PlayObjectiveAudio("BathTubFaucetOn", 0);
+                }
 
                 if (currentHoldTime >= requiredHoldTime)
                 {
                     CompleteObjective();
-                    if (turnBathOn.isPlaying)
-                        turnBathOn.Stop();
+                    ObjectiveAudioManager.Instance.Stop("BathTubFaucetOn");
                 }
             }
             else
@@ -60,7 +60,7 @@ public class TurnOnBathObjective : Objective
                 currentHoldTime = 0f;
                 UpdateProgressBar(0f);
                 progressBar.gameObject.SetActive(false);
-                turnBathOn.Stop();
+                ObjectiveAudioManager.Instance.Stop("BathTubFaucetOn");
             }
         }
     }

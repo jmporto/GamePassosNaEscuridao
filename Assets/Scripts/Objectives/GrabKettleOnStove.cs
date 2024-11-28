@@ -5,7 +5,6 @@ using UnityEngine;
 public class GrabKettleOnStove : Objective
 {
     private bool hasInteracted = false;
-    public AudioSource metalClank;
 
     private void Start()
     {
@@ -30,8 +29,10 @@ public class GrabKettleOnStove : Objective
 
                 CompleteObjective();
 
-                if (!metalClank.isPlaying)
-                    metalClank.Play();
+                if (!ObjectiveAudioManager.Instance.IsPlaying("MetalPickUp"))
+                {
+                    ObjectiveAudioManager.Instance.PlayObjectiveAudio("MetalPickUp", 0);
+                }
             }
         }
     }

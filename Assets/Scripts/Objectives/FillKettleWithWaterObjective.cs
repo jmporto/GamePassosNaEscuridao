@@ -8,7 +8,6 @@ public class FillKettleWithWaterObjective : Objective
     private float currentHoldTime = 0f;
     public float activationRange = 1f;
     private GameObject player;
-    public AudioSource waterFilling;
 
     void Start()
     {
@@ -30,7 +29,7 @@ public class FillKettleWithWaterObjective : Objective
                 progressBar.gameObject.SetActive(false);
                 currentHoldTime = 0f;
                 UpdateProgressBar(0f);
-                waterFilling.Stop();
+                ObjectiveAudioManager.Instance.Stop("WaterBottleFillingUp");
             }
         }
     }
@@ -45,16 +44,16 @@ public class FillKettleWithWaterObjective : Objective
                 UpdateProgressBar(currentHoldTime / requiredHoldTime);
                 progressBar.gameObject.SetActive(true);
 
-                if (!waterFilling.isPlaying)
-                    waterFilling.Play();
+                if (!ObjectiveAudioManager.Instance.IsPlaying("WaterBottleFillingUp"))
+                {
+                    ObjectiveAudioManager.Instance.PlayObjectiveAudio("WaterBottleFillingUp", 0);
+                }
 
                 if (currentHoldTime >= requiredHoldTime)
                 {
                     CompleteObjective();
 
-                    if (!waterFilling.isPlaying)
-                        waterFilling.Play();
-
+                    ObjectiveAudioManager.Instance.Stop("WaterBottleFillingUp");
                 }
             }
             else
@@ -62,7 +61,7 @@ public class FillKettleWithWaterObjective : Objective
                 currentHoldTime = 0f;
                 UpdateProgressBar(0f);
                 progressBar.gameObject.SetActive(false);
-                waterFilling.Stop();
+                ObjectiveAudioManager.Instance.Stop("WaterBottleFillingUp");
             }
         }
     }

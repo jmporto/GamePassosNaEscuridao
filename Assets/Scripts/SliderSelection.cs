@@ -83,7 +83,7 @@ public class SliderSelection : MonoBehaviour
     void AdjustSlider(float horizontalInput)
     {
         Slider currentSlider = sliders[currentSliderIndex];
-        currentSlider.value += horizontalInput * Time.deltaTime * 10f;
+        currentSlider.value += horizontalInput * Time.deltaTime * 3f;
     }
 
     void HighlightSlider(int index)

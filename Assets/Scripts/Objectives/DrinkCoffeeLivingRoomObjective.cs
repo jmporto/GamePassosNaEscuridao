@@ -13,7 +13,6 @@ public class DrinkCoffeeLivingRoomObjective : Objective
     public Transform spawnPoint;
     public float activationRange = 1f;
     private GameObject player;
-    public AudioSource drinkPour;
 
     void Start()
     {
@@ -35,7 +34,7 @@ public class DrinkCoffeeLivingRoomObjective : Objective
                 progressBar.gameObject.SetActive(false);
                 currentHoldTime = 0f;
                 UpdateProgressBar(0f);
-                drinkPour.Stop();
+                ObjectiveAudioManager.Instance.Stop("CoffeePour");
             }
         }
     }
@@ -50,16 +49,17 @@ public class DrinkCoffeeLivingRoomObjective : Objective
                 UpdateProgressBar(currentHoldTime / requiredHoldTime);
                 progressBar.gameObject.SetActive(true);
 
-                if (!drinkPour.isPlaying)
-                    drinkPour.Play();
+                if (!ObjectiveAudioManager.Instance.IsPlaying("CoffeePour"))
+                {
+                    ObjectiveAudioManager.Instance.PlayObjectiveAudio("CoffeePour", 0);
+                }
 
                 if (currentHoldTime >= requiredHoldTime)
                 {
                     CompleteObjective();
                     InstantiatePrefabs();
 
-                    if (drinkPour.isPlaying)
-                        drinkPour.Stop();
+                    ObjectiveAudioManager.Instance.Stop("CoffeePour");
                 }
             }
             else
@@ -67,7 +67,7 @@ public class DrinkCoffeeLivingRoomObjective : Objective
                 currentHoldTime = 0f;
                 UpdateProgressBar(0f);
                 progressBar.gameObject.SetActive(false);
-                drinkPour.Stop();
+                ObjectiveAudioManager.Instance.Stop("CoffeePour");            
             }
         }
     }

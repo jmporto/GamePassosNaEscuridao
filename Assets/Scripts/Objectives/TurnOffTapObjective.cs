@@ -8,17 +8,14 @@ public class TurnOffTapObjective : Objective
     private float currentHoldTime = 0f;
     public float activationRange = 1f;
     private GameObject player;
-    public AudioSource waterRunningAudio;  // �udio tocado antes de pressionar o bot�o
-    public AudioSource turnOffFaucetAudio;
 
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
 
-        if (!waterRunningAudio.isPlaying)
+        if (!ObjectiveAudioManager.Instance.IsPlaying("WaterRunning"))
         {
-            waterRunningAudio.loop = true;
-            waterRunningAudio.Play();
+            ObjectiveAudioManager.Instance.PlayObjectiveAudio("WaterRunning", 0);
         }
     }
 
@@ -37,7 +34,8 @@ public class TurnOffTapObjective : Objective
                 progressBar.gameObject.SetActive(false);
                 currentHoldTime = 0f;
                 UpdateProgressBar(0f);
-                turnOffFaucetAudio.Stop();
+                ObjectiveAudioManager.Instance.Stop("TurnOffFaucet");
+                ObjectiveAudioManager.Instance.Stop("WaterRunning");
             }
         }
     }
@@ -52,21 +50,23 @@ public class TurnOffTapObjective : Objective
                 UpdateProgressBar(currentHoldTime / requiredHoldTime);
                 progressBar.gameObject.SetActive(true);
 
-                if (!turnOffFaucetAudio.isPlaying)
-                    turnOffFaucetAudio.Play();
+                if (!ObjectiveAudioManager.Instance.IsPlaying("TurnOffFaucet"))
+                {
+                    ObjectiveAudioManager.Instance.PlayObjectiveAudio("TurnOffFaucet", 0);
+                }
 
-                if (waterRunningAudio.isPlaying)
-                    waterRunningAudio.Stop();
+                if (ObjectiveAudioManager.Instance.IsPlaying("WaterRunning"))
+                {
+                    ObjectiveAudioManager.Instance.Stop("WaterRunning");
+                }
 
                 if (currentHoldTime >= requiredHoldTime)
                 {
                     CompleteObjective();
 
-                    if (waterRunningAudio.isPlaying)
-                        waterRunningAudio.Stop();
+                    ObjectiveAudioManager.Instance.Stop("WaterRunning");
 
-                    if (turnOffFaucetAudio.isPlaying)
-                        turnOffFaucetAudio.Stop();
+                    ObjectiveAudioManager.Instance.Stop("TurnOffFaucet");
                 }
             }
             else
@@ -74,10 +74,13 @@ public class TurnOffTapObjective : Objective
                 currentHoldTime = 0f;
                 UpdateProgressBar(0f);
                 progressBar.gameObject.SetActive(false);
-                turnOffFaucetAudio.Stop();
 
-                if (!waterRunningAudio.isPlaying)
-                    waterRunningAudio.Play();
+                ObjectiveAudioManager.Instance.Stop("TurnOffFaucet");
+
+                if (!ObjectiveAudioManager.Instance.IsPlaying("WaterRunning"))
+                {
+                    ObjectiveAudioManager.Instance.PlayObjectiveAudio("WaterRunning", 0);
+                }
             }
         }
     }

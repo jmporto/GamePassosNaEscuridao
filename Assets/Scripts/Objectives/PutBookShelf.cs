@@ -11,11 +11,7 @@ public class PutBookShelf : Objective
     public GameObject bookPrefab;
     public Transform spawnLocation;
     public static GameObject instantiatedBookShelf;
-    public AudioSource placeBook;
-
-
     private Vector3 scaleAdjustment = new Vector3(0.72f, 0.72f, 0.5f);
-
     private Vector3 positionAdjustment = new Vector3(-11.35f, 3f, 0f);
 
     void Start()
@@ -38,7 +34,7 @@ public class PutBookShelf : Objective
                 progressBar.gameObject.SetActive(false);
                 currentHoldTime = 0f;
                 UpdateProgressBar(0f);
-                placeBook.Stop();
+                ObjectiveAudioManager.Instance.Stop("Book2seconds");
             }
         }
     }
@@ -62,14 +58,15 @@ public class PutBookShelf : Objective
                 UpdateProgressBar(currentHoldTime / requiredHoldTime);
                 progressBar.gameObject.SetActive(true);
 
-                if (!placeBook.isPlaying)
-                    placeBook.Play();
+                if (!ObjectiveAudioManager.Instance.IsPlaying("Book2seconds"))
+                {
+                    ObjectiveAudioManager.Instance.PlayObjectiveAudio("Book2seconds", 0);
+                }
 
                 if (currentHoldTime >= requiredHoldTime)
                 {
                     CompleteObjective();
-                    if (placeBook.isPlaying)
-                        placeBook.Stop();
+                    ObjectiveAudioManager.Instance.Stop("Book2seconds");
                 }
             }
             else
@@ -77,7 +74,7 @@ public class PutBookShelf : Objective
                 currentHoldTime = 0f;
                 UpdateProgressBar(0f);
                 progressBar.gameObject.SetActive(false);
-                placeBook.Stop();
+                ObjectiveAudioManager.Instance.Stop("Book2seconds");
             }
         }
     }

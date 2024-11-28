@@ -8,7 +8,6 @@ public class MixCoffeeOnSinkObjective : Objective
     private float currentHoldTime = 0f;
     public float activationRange = 1f;
     private GameObject player;
-    public AudioSource coffeeGrinder;
 
     void Start()
     {
@@ -30,7 +29,7 @@ public class MixCoffeeOnSinkObjective : Objective
                 progressBar.gameObject.SetActive(false);
                 currentHoldTime = 0f;
                 UpdateProgressBar(0f);
-                coffeeGrinder.Stop();
+                ObjectiveAudioManager.Instance.Stop("CoffeeGrinder");
             }
         }
     }
@@ -45,15 +44,16 @@ public class MixCoffeeOnSinkObjective : Objective
                 UpdateProgressBar(currentHoldTime / requiredHoldTime);
                 progressBar.gameObject.SetActive(true);
 
-                if (!coffeeGrinder.isPlaying)
-                    coffeeGrinder.Play();
+                if (!ObjectiveAudioManager.Instance.IsPlaying("CoffeeGrinder"))
+                {
+                    ObjectiveAudioManager.Instance.PlayObjectiveAudio("CoffeeGrinder", 0);
+                }
 
                 if (currentHoldTime >= requiredHoldTime)
                 {
                     CompleteObjective();
 
-                    if (coffeeGrinder.isPlaying)
-                        coffeeGrinder.Stop();
+                    ObjectiveAudioManager.Instance.Stop("CoffeeGrinder");
                 }
             }
             else
@@ -61,7 +61,7 @@ public class MixCoffeeOnSinkObjective : Objective
                 currentHoldTime = 0f;
                 UpdateProgressBar(0f);
                 progressBar.gameObject.SetActive(false);
-                coffeeGrinder.Stop();
+                ObjectiveAudioManager.Instance.Stop("CoffeeGrinder");
             }
         }
     }

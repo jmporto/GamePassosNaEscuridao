@@ -10,6 +10,9 @@ public class AudioMixerScript : MonoBehaviour
     [SerializeField] private Slider music;
     [SerializeField] private Slider sfx;
 
+    private const float MIN_VOLUME = -80f;  // Valor mínimo do volume (dB)
+    private const float MAX_VOLUME = 0f;     // Valor máximo do volume (dB)
+
     public void Start() {
         if (PlayerPrefs.HasKey("musicVolume")) {
             LoadVolume();
@@ -21,13 +24,15 @@ public class AudioMixerScript : MonoBehaviour
 
     public void SetMusicVolume() {
         float volume = music.value;
-        myMixer.SetFloat("music", Mathf.Log10(volume)*20);
+        float dbValue = Mathf.Lerp(MAX_VOLUME, MIN_VOLUME, 1 - volume); 
+        myMixer.SetFloat("music", dbValue);
         PlayerPrefs.SetFloat("musicVolume", volume);
     }
 
     public void SetSFXVolume() {
         float volume = sfx.value;
-        myMixer.SetFloat("sfx", Mathf.Log10(volume)*20);
+        float dbValue = Mathf.Lerp(MAX_VOLUME, MIN_VOLUME, 1 - volume);
+        myMixer.SetFloat("sfx", dbValue);
         PlayerPrefs.SetFloat("sfxVolume", volume);
     }
 

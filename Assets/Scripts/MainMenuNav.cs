@@ -8,7 +8,6 @@ public class MainMenuNav : MonoBehaviour
 {
     public Button[] buttons;
     private int selectedIndex = 0;
-/*    public GameObject optionsCanvas;*/
     private bool isVerticalInputPressed = false;
     private bool isGreenInputPressed = false;
 
@@ -24,21 +23,18 @@ public class MainMenuNav : MonoBehaviour
         float verde0Value = Input.GetAxisRaw("VERDE0");
         float verticalInput = Input.GetAxisRaw("VERTICAL0");
 
-        // Detectar transição para cima
         if (verticalInput > 0 && !isVerticalInputPressed)
         {
             ChangeSelection(-1);
             Debug.Log("Movendo para cima");
             isVerticalInputPressed = true;
         }
-        // Detectar transição para baixo
         else if (verticalInput < 0 && !isVerticalInputPressed)
         {
             ChangeSelection(1);
             Debug.Log("Movendo para baixo");
             isVerticalInputPressed = true;
         }
-        // Resetar a flag quando não há input
         else if (verticalInput == 0)
         {
             isVerticalInputPressed = false;
@@ -84,10 +80,6 @@ public class MainMenuNav : MonoBehaviour
             case 0:
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
                 break;
-/*            case 1:
-                gameObject.SetActive(false);
-                optionsCanvas.SetActive(true);
-                break;*/
             case 1:
                 Application.Quit();
                 break;

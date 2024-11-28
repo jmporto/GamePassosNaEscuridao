@@ -9,8 +9,6 @@ public class TurnStoveOffObjective : Objective
     public float activationRange = 1f;
     private GameObject player;
     public GameObject stoveOffPrefab;   
-    public AudioSource turnOffStove;
-
 
     void Start()
     {
@@ -32,7 +30,7 @@ public class TurnStoveOffObjective : Objective
                 progressBar.gameObject.SetActive(false);
                 currentHoldTime = 0f;
                 UpdateProgressBar(0f);
-                turnOffStove.Stop();
+                ObjectiveAudioManager.Instance.Stop("StoveOff");
             }
         }
     }
@@ -64,16 +62,17 @@ public class TurnStoveOffObjective : Objective
                 UpdateProgressBar(currentHoldTime / requiredHoldTime);
                 progressBar.gameObject.SetActive(true);
 
-                if (!turnOffStove.isPlaying)
-                    turnOffStove.Play();
+                if (!ObjectiveAudioManager.Instance.IsPlaying("StoveOff"))
+                {
+                    ObjectiveAudioManager.Instance.PlayObjectiveAudio("StoveOff", 0);
+                }
 
                 if (currentHoldTime >= requiredHoldTime)
                 {
                     CompleteObjective();
                     ReplaceStoveWithOffVersion();
 
-                    if (turnOffStove.isPlaying)
-                        turnOffStove.Stop();
+                    ObjectiveAudioManager.Instance.Stop("StoveOff");
 
                 }
             }
@@ -82,7 +81,7 @@ public class TurnStoveOffObjective : Objective
                 currentHoldTime = 0f;
                 UpdateProgressBar(0f);
                 progressBar.gameObject.SetActive(false);
-                turnOffStove.Stop();
+                ObjectiveAudioManager.Instance.Stop("StoveOff");
             }
         }
     }

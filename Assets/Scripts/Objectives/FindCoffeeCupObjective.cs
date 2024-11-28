@@ -5,9 +5,6 @@ using UnityEngine;
 public class FindCoffeeCupObjective : Objective
 {
     public GameObject coffeeCup;
-    public AudioSource ceramicClank;
-
-
 
     private void Start()
     {
@@ -25,8 +22,10 @@ public class FindCoffeeCupObjective : Objective
 
             CompleteObjective();
 
-            if (!ceramicClank.isPlaying)
-                    ceramicClank.Play();
+            if (!ObjectiveAudioManager.Instance.IsPlaying("CeramicClank"))
+            {
+                ObjectiveAudioManager.Instance.PlayObjectiveAudio("CeramicClank", 0);
+            }
         }
     }
 }

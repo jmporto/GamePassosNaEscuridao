@@ -5,7 +5,6 @@ using UnityEngine;
 public class GetKettleObjective : Objective
 {
     public GameObject kettlePrefab;
-    public AudioSource metalPickUp;
 
     private void Start()
     {
@@ -23,8 +22,10 @@ public class GetKettleObjective : Objective
 
             CompleteObjective();
 
-            if (metalPickUp != null)
-                    metalPickUp.Play();
+            if (!ObjectiveAudioManager.Instance.IsPlaying("MetalPickUp"))
+            {
+                ObjectiveAudioManager.Instance.PlayObjectiveAudio("MetalPickUp", 0);
+            }
         }
     }
 }

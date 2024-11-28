@@ -10,13 +10,6 @@ public abstract class Objective : MonoBehaviour
     public Slider progressBar;
     public string description;
     protected bool isCompleted = false;
-    public AudioSource sucessAudio;
-
-    void Start()
-    {
-        if (sucessAudio == null)
-            sucessAudio = GetComponent<AudioSource>();
-    }
 
     public virtual void StartObjective()
     {
@@ -48,7 +41,9 @@ public abstract class Objective : MonoBehaviour
     {
         isCompleted = true;
         progressBar.gameObject.SetActive(false);
-        if (sucessAudio != null)
-            sucessAudio.Play();
+        if (!ObjectiveAudioManager.Instance.IsPlaying("SucessAudio"))
+        {
+            ObjectiveAudioManager.Instance.PlayObjectiveAudio("SucessAudio", 0);
+        }
     }
 }

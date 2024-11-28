@@ -22,7 +22,6 @@ public class DuckInfo : MonoBehaviour
         {
             return duckMessages[duckIndex];
         }
-        Debug.Log($"indice invalido ou fora do limite: {duckIndex}");
         return "Mensagem padrao de coleta de pato!";
     }
 }
